@@ -1,4 +1,7 @@
 // ACA SE DEFINEN LOS ESTADOS Y LA LOGICA
+import {useState, useEffect} from 'react'
+import clienteAxios from '../config/axios';
+
 
 import { TYPES } from "../actions/shoppingActions";
 
@@ -10,7 +13,7 @@ export  const shoppingInitialState = {
 
     products:[
         {id:1, name: "producto1",  price:100},
-        {id:2, name: "producto12", price:2100},
+        {id:2, name: "producto22", price:2100},
         {id:3, name: "producto13", price:3100},
         {id:4, name: "producto14", price:4100},
         {id:5, name: "producto15", price:5100},
