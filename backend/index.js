@@ -24,9 +24,10 @@ app.use(fileupload({
 
 conectarDB();
 
-// middlewares // Se utiliza para realizar la comunicacion entre el servidor del frontend y el backend 
+// middlewares 
+// Se utiliza para realizar la comunicacion entre el servidor del frontend y el backend 
 
-const dominiosPermitidos = [process.env.FRONTEND_URL];
+ /*const dominiosPermitidos = [process.env.FRONTEND_URL];
 const corsOptions = {
 origin: function(origin, callback){ 
     if(dominiosPermitidos.indexOf(origin) !== -1){ 
@@ -39,9 +40,9 @@ origin: function(origin, callback){
 
     };
 
-    app.use(cors(corsOptions));
+    app.use(cors(corsOptions));   */
 
-    
+    app.use(cors());
 
     // Gestion usuarios
 
@@ -57,5 +58,6 @@ app.use('/api/productos', productosRoutes);
 
 app.use('/api/ventas', ventasRoutes);
 
-app.listen(PORT, () => { console.log(`Servidor funcionando en el puerto ${PORT} `); 
+app.listen(PORT, () => { 
+    console.log(`Servidor funcionando en el puerto ${PORT} `); 
 });

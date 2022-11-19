@@ -4,7 +4,8 @@ import imagen2 from '../images/94308581-abff-47d1-aa5a-76d6099a9ef3.jpg'
 import imagen3 from '../images/fe7d9408-5651-4a1b-b233-974869ebc7f3.jpg'
 import imagen4 from '../images/zapato1.jpg'
 
-//import styled from 'styled-components'
+//import styled from '/styled-components'
+
 
 
 const Cards = () => {

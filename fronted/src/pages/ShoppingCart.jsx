@@ -1,10 +1,11 @@
 import React from 'react';
 //import CartItem from '../components/CardItem'
-import { useReducer } from 'react';
+import { useReducer, useEffect, useState} from 'react';
 import { TYPES } from '../actions/shoppingActions';
 import CartItem from '../components/CartItem';
 import ProductItem from '../components/productItem';
 import { shoppingInitialState, shoppingReducer } from '../reducers/shoppingReducers';
+import clienteAxios from '../config/axios';
 
 
 
@@ -13,6 +14,23 @@ const ShoppingCart = () => {
 	const[state, dispatch] = useReducer(shoppingReducer, shoppingInitialState );
 		
 	const{products, cart} = state;
+
+	const [ productos, setProductos ] = useState([]);
+
+
+	useEffect( () =>{const 
+		consultarApi = async () =>{
+			try 
+			{const { data } = await clienteAxios('/productos/get');
+			setProductos(data);
+
+			console.log(data)
+		} 
+		catch (error) {console.log("Error: " + error.message);
+	         }};
+			 consultarApi();}, []);
+
+
 
 
     /// SE DEFINEN LOS METODOS DEL CARRITO DE COMPRAS
@@ -25,6 +43,7 @@ const ShoppingCart = () => {
 
 	const delFromCart = (id,all = false) => {
 		console.log(id,all)
+
 		if(all){
 			dispatch({type:TYPES.REMOVE_ALL_FROM_CART,payload:id})
 			
@@ -45,7 +64,7 @@ const ShoppingCart = () => {
 			<h2> CARRITO DE COMPRAS</h2>
 			<h3> Productos</h3>
 			<article className="box grid-responsive">
-				{products.map((product)  => (<ProductItem key={product.id} data={product} addToCart={addToCart}/> ))}
+				{productos.map((product)  => (<ProductItem key={productos.id} data={product} addToCart={addToCart}/> ))}
 			</article>
 			<h3> Carrito</h3>
 
@@ -55,7 +74,7 @@ const ShoppingCart = () => {
 				</button>
 
 				{
-					cart.map((item, index) => <CartItem key={index} data={item} delFromCart={delFromCart} />)
+					productos.map((item, index) => <CartItem key={index} data={item} delFromCart={delFromCart} />)
 				}
 			</article>
 
@@ -63,5 +82,9 @@ const ShoppingCart = () => {
 
 	);
   }
+
+
+
+
 
 export default ShoppingCart;

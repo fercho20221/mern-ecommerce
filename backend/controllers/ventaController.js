@@ -1,6 +1,7 @@
 import Venta from "../models/Venta.js";
 import Producto from "../models/Producto.js";
 
+
 /* Funciones */
 
 const getProductoStock = (producto, cantidad) => new Promise( async (resolve, reject) => {

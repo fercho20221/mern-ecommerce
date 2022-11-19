@@ -2,10 +2,12 @@
 import {useState, useEffect} from 'react'
 import clienteAxios from '../config/axios';
 
+//import {getProductos} from '../../../backend/controllers/productoController.js'
+
 
 import { TYPES } from "../actions/shoppingActions";
 
-//import { getProductos } from "../../../backend/controllers/productoController";
+
 
 //const [ productos, setProductos] = useState([])
 

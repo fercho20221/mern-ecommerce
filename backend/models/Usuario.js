@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import generarId from '../helper/generarId.js';
 
+
+
 // .  schema toma una informacion y ella crea el esquema
 const usuarioShema = mongoose.Schema({
     nombre: {
