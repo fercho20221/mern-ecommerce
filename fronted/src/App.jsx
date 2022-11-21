@@ -1,68 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import { BrowserRouter as Router, 
-          Route, 
-          Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
-import { useEffect } from 'react'
-import clienteAxios from './config/axios'
+// Context
+import { AuthProvider } from './context/AuthProvider';
+import { UsuariosProvider } from './context/UsuariosProvider'
+// import { ProductosProvider } from './context/ProductosProvider'
 
-
-// . pages
-
-import ShoppingCart from './pages/ShoppingCart'
-
-
-// Layout (LayoutAuth) 
+// Layout (LayoutAuth)
 import LayoutAuth from './Layout/LayoutAuth'
-import Layout from './Layout/layoutVentas'
+import RutaProtegida from './Layout/RutaProtegida'
 
-// pages (usuarios) 
-import Login from './pages/Login' 
-import Registro from './pages/usuario/Registro' 
-import OlvidePassword from './pages/usuario/OlvidePassword' 
+// pages (usuarios)
+import Login from './pages/Login'
+import Registro from './pages/usuario/Registro'
+import OlvidePassword from './pages/usuario/OlvidePassword'
 import Confirmar from './pages/usuario/Confirmar'
+// pages (usuarios protegidas)
+import Perfil from './pages/usuario/Perfil'
+import CambiarPassword from './pages/usuario/CambiarPassword.jsx'
 
+// pages (productos)
+// import ListaProductos from './pages/productos/ListaProductos'
+// import FormularioProductos from './pages/productos/FormularioProductos'
+// import DetalleProducto from './pages/productos/DetalleProducto'
 
 function App() {
- // const [count, setCount] = useState(0)
-
- /*
-useEffect(()=> {
-
-  const consultarPrueba = async () =>
-
-},[]
-
-)
-*/
-
   return (
     <Router>
+      <AuthProvider>
+        <UsuariosProvider>
+          {/* <ProductosProvider> */}
+            <Routes>
 
-          <Routes> {/* RUTAS PUBLICAS */}
-
+              {/* RUTAS PUBLICAS */}
               <Route path='/' element={<LayoutAuth />}>
-
-              <Route index element={<Login />} />
-
-              <Route path='registro' element={<Registro />} />
-
-              <Route path='olvide-password' element={<OlvidePassword />} />
-
-              <Route path='confirmar/:id' element={<Confirmar />} />
-
-              <Route path='lista-carrito' element={<ShoppingCart/>}/>
-
-
-
+                <Route index element={<Login />} />
+                <Route path='registro' element={<Registro />} />
+                <Route path='olvide-password' element={<OlvidePassword />} />
+                <Route path='confirmar/:id' element={<Confirmar />} />
               </Route>
 
-          </Routes>
-
-
+              {/* Rutas Protegidas */}
+              <Route path='/perfil' element={<RutaProtegida />}>
+                <Route index element={<Perfil />} />
+                <Route path="cambiar-password" element={<CambiarPassword />} />
+              </Route>
+              
+            </Routes>
+          {/* </ProductosProvider> */}
+        </UsuariosProvider>
+      </AuthProvider>
     </Router>
   )
 }
-
 export default App

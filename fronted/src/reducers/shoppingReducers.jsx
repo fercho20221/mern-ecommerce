@@ -25,18 +25,10 @@ export  const shoppingInitialState = {
     cart:[]
     
 
-    
-    
-
-
-
-
-
-
    
 }
 
-export function shoppingReducer(state, action){
+export function shoppingReducer(state, action, productos){
     switch (action.type){
         case TYPES.ADD_TO_CART:{
             //  cuando id del producto coincida con el Payload, entonces almacena el objeto en la variable

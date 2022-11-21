@@ -14,7 +14,7 @@ const OlvidePassword = () => {
 
                 <div>
 
-                    OlvidePassword.jsx
+                    
 
                     <h1 className='font-bold text-6xl uppercase text-center md:w-2/3 mx-auto'>Recupera tu cuenta y disfruta de los <span className='text-sky-700'>productos</span></h1> <form className='p-4 mx-auto w-96 sm:px-9 mt-8 shadow-md'> <div className='mb-5'>
 
@@ -31,6 +31,9 @@ const OlvidePassword = () => {
                             <Link to="/registro" className=''>No tengo cuenta.</Link>
 
                             <Link to="/">Ya tengo cuenta.</Link>
+
+                            
+
 
                             
 
