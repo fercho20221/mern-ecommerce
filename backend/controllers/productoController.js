@@ -1,3 +1,4 @@
+
 import Producto from "../models/Producto.js";
 import fs from "fs-extra";
 import { 
@@ -12,41 +13,59 @@ const prueba = (req, res) => {
 };
 
 const createProductos = async (req, res) => {
-    try {
-        const { nombre, description, precio, stock } = req.body;
-        let image;
-        
-        if (req.files.image) {
-            const result = await uploadImage(req.files.image.tempFilePath);
-            await fs.remove(req.files.image.tempFilePath);
+    try 
+    { const { nombre, description,  precio, stock }  = req.body;
+    let image;
 
-            image = {
-                url: result.secure_url,
-                public_id: result.public_id,
-            };
+    
+        if(req.files!==null){
+        
+        if (req.files.image) { 
             
-            //console.log(result);
+            const result = await uploadImage(req.files.image.tempFilePath); 
+            await fs.remove(req.files.image.tempFilePath);
+        
+        image = { 
+            url: result.secure_url, 
+            public_id: result.public_id, 
+        };
+        
+        //console.log(result);
+        }
+        } else
+        { image = { 
+            url: "https://res.cloudinary.com/dgi1aoxog/image/upload/v1668981098/productos/productoblacoynegro_ty6jw2.jpg", 
+            public_id: "productos/productoblacoynegro_ty6jw2", 
+        }; 
+            }
+            
+            const Newproducto = new Producto({ 
+                nombre, 
+                description,
+                precio, 
+                image,
+                stock });
+                await Newproducto.save();
+            
+            return res.json(Newproducto);
+            
+            } 
+            
+            catch (error) { 
+                console.log(error); 
+                return res.status(500).json({ message: error.message });
+            
+            };
         }
 
-        const Newproducto = new Producto({ nombre, description, precio, image, stock });
-        await Newproducto.save();
-
-        return res.json(Newproducto);
-
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({ msg: error.message });
-    }
-};
-
 const getProductos = async (req, res) => {
-    try {
-        const productos = await Producto.find();
-        res.send(productos);
-    } catch (error) {
-        console.log(error.message);
-        return res.status(500).json({ message: error.message });
-    }
+            try {
+                const productos = await Producto.find();
+                res.send(productos);
+            } catch (error) {
+                console.log(error.message);
+                return res.status(500).json({ message: error.message });
+            }
 };
 
 const updateProductos = async (req, res) => {
@@ -55,31 +74,52 @@ const updateProductos = async (req, res) => {
     try {
         const updateProducto = await Producto.findById(id);
         // console.log(updatePlato);
-
         updateProducto.nombre = nombre;
         updateProducto.description = description;
         updateProducto.precio = precio;
         updateProducto.precio = stock;
 
-        if (req.files.image) {
+        if(req.files!==null){ 
+            if (req.files.image) {
 
-            await deleteImage(updateProducto.image.public_id);
-
-            const result = await uploadImage(req.files.image.tempFilePath);
-            await fs.remove(req.files.image.tempFilePath);
+            if (
+                updateProducto.image.public_id && 
+                updateProducto.image.public_id !== 
+                "productos/productoblacoynegro_ty6jw2"
+                ) { 
+                    await deleteImage(updateProducto.image.public_id); 
+                }
             
+            const result = await uploadImage(req.files.image.tempFilePath);
+            
+            await fs.remove(req.files.image.tempFilePath);
             updateProducto.image = {
                 url: result.secure_url,
                 public_id: result.public_id,
-            }; 
+            };
+                }else{ 
+            
+                updateProducto.image = { 
+                    url: "https://res.cloudinary.com/dgi1aoxog/image/upload/v1668981098/productos/productoblacoynegro_ty6jw2.jpg", 
+                    public_id: "productos/productoblacoynegro_ty6jw2", 
+                }; 
+            }
 
-            await updateProducto.save();
-
-            return res.status(204).json(updatePlato);
         }
-    } catch (error) {
-        console.log(error.message);  
-    }
+        else {
+            if (!updateProducto.image.public_id) {
+              updateProducto.image = {
+                url: "https://res.cloudinary.com/dgi1aoxog/image/upload/v1668981098/productos/productoblacoynegro_ty6jw2.jpg",
+                public_id: "productos/productoblacoynegro_ty6jw2",
+              };
+            }
+          }
+          await updateProducto.save();
+          return res.status(204).json(updateProducto);
+        } catch (error) {
+          console.log(error.message);
+        }
+      
 };
 
 const deleteProductos = async (req, res) => {

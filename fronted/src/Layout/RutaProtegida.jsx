@@ -8,6 +8,7 @@ const RutaProtegida = () => {
     if (cargando) return 'cargando...'
     return (
         <div className="h-full">
+            
             {/* <Navbar /> */}
             <Outlet />
         </div>
