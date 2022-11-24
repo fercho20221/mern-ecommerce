@@ -1,10 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import logo from "../assets/logo-empresa.png";
 import svg60 from "../assets/svg/icons8-menu-30.svg";
+import 'boxicons';
+import { DataContext } from "../context/DataProvider";
 
 const Navbar = ({ texto, ruta, id, perfil }) => {
+
+  const provider = useContext(DataContext);
+
+  const [cantidad, setCantidad] = useState(provider.carrito.length);
+
+  useEffect(() => {
+    setCantidad(provider.carrito.length)
+  });
 
   const { cerrarSesion } = useAuth();
   const [ver, setVer] = useState(false);
@@ -70,6 +81,31 @@ d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.7
               {texto}
             </Link>
           </button>
+          <button
+            type="button"
+            className="hover:scale-110 transition-all hover:border-b-2 hover:border-b-blue-500"
+          >
+            <Link
+              to={`/productos/carrito-compra`}
+              className="uppercase text-black p-2 w-full cursor-pointer font-medium transition-all"
+            >
+              <box-icon type='solid' name='cart-alt'>  </box-icon>
+              <h1 style={{
+                position: "absolute",
+                color: "blue",
+                width: "4.2rem",
+                height: "2.8rem",
+                bottom: 0,
+                
+               
+              }}>{cantidad}</h1>
+              
+            </Link>
+            
+          </button>
+
+
+
           <button
             type="button"
             className="bg-sky-700 text-white rounded-lg uppercase font-medium hover:bg-sky-500 transition-colors"
